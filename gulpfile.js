@@ -6,6 +6,7 @@ var gulp    = require("gulp"),
     connect = require("gulp-connect"),
     changed = require("gulp-changed"),
     bower   = require("gulp-bower"),
+    babel   = require("gulp-babel"),
     // compilers
     eslint = require("gulp-eslint"),
     less    = require("gulp-less"), // gulp-sass is broken
@@ -70,6 +71,9 @@ gulp.task("copy", function(){
     // lint error, return the stream and pipe to failAfterError last.
     .pipe(eslint.failAfterError())
     .pipe(changed(paths.dst))
+    .pipe(babel({
+      presets: ['@babel/env']
+    }))
     .pipe(gulp.dest(paths.dst))
     .pipe(connect.reload());
 });

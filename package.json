@@ -11,9 +11,12 @@
   "description": "Angular based datepicker with mighty options",
   "main": "build/angular-mighty-datepicker.js",
   "devDependencies": {
+    "@babel/core": "^7.10.2",
+    "@babel/preset-env": "^7.10.2",
     "beepbeep": "^1.2.0",
     "eslint": "^7.2.0",
     "gulp": "~3.8.10",
+    "gulp-babel": "^8.0.0",
     "gulp-bower": "0.0.4",
     "gulp-changed": "~0.3.0",
     "gulp-clean": "~0.2.4",
