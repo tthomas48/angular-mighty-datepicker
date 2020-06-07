@@ -1,14 +1,14 @@
+/* global console */
+require("gulp-watch");
 var gulp    = require("gulp"),
     gutil = require('gulp-util'),
-    watch   = require("gulp-watch"),
     clean   = require("gulp-clean"),
     connect = require("gulp-connect"),
     changed = require("gulp-changed"),
     bower   = require("gulp-bower"),
     // compilers
+    eslint = require("gulp-eslint"),
     less    = require("gulp-less"), // gulp-sass is broken
-    coffee  = require("gulp-coffee"),
-    coffeelint  = require("gulp-coffeelint"),
     plumber = require('gulp-plumber');
 
 var warn = function(err) { console.warn(err); };
@@ -24,7 +24,7 @@ var onError = function (err) {
 
 gulp.task("default", ["bower", "build"]);
 
-gulp.task("build", ["coffee", "less"])
+gulp.task("build", ["copy", "less"])
 
 gulp.task("server", ["build", "watch"], function() {
   connect.server({
@@ -49,13 +49,6 @@ gulp.task("bower", function() {
 
 // compilers
 
-// gulp.task("copy", function(){
-//   return gulp.src(paths.src + "**/*.{json,png,jpg,gif,eot,svg,ttf,woff}")
-//     .pipe(changed(paths.dst))
-//     .pipe(gulp.dest(paths.dst))
-//     .pipe(connect.reload());
-// });
-
 gulp.task("less", function(){
   return gulp.src(paths.src + "**/*.less")
     .pipe(changed(paths.dst, { extension: '.css' }))
@@ -67,15 +60,16 @@ gulp.task("less", function(){
     .pipe(connect.reload());
 });
 
-gulp.task("coffee", function(){
-  return gulp.src(paths.src + "**/*.coffee")
-    .pipe(changed(paths.dst, { extension: '.js' }))
-    .pipe(coffeelint())
-    .pipe(coffeelint.reporter())
-    .pipe(plumber({
-      errorHandler: onError
-    }))
-    .pipe(coffee().on('error', warn))
+gulp.task("copy", function(){
+  return gulp.src(paths.src + "**/*.js")
+    .pipe(eslint())
+    // eslint.format() outputs the lint results to the console.
+    // Alternatively use eslint.formatEach() (see Docs).
+    .pipe(eslint.format())
+    // To have the process exit with an error code (1) on
+    // lint error, return the stream and pipe to failAfterError last.
+    .pipe(eslint.failAfterError())
+    .pipe(changed(paths.dst))
     .pipe(gulp.dest(paths.dst))
     .pipe(connect.reload());
 });
