@@ -273,52 +273,52 @@
             });            
             //return _prepare();
           };
-          $scope.$watchCollection('markers', function (/*newMarkers, oldMarkers*/) {
-            _indexMarkers();
-            return _prepare();
-          });
+          // $scope.$watchCollection('markers', function (/*newMarkers, oldMarkers*/) {
+          //   _indexMarkers();
+          //   return _prepare();
+          // });
           _setup();
           _build();
-          switch ($scope.options.mode) {
-            case "multiple":
-              $scope.$watchCollection('model', function (/*newVals, oldVals*/) {
-                return _prepare();
-              });
-              break;
-            case "simple":
-              $scope.$watch('model', function (newVal, oldVal) {
-                if (!moment.isMoment(newVal)) {
-                  newVal = moment(newVal);
-                }
-                if (!oldVal || oldVal && !newVal.isSame(oldVal, 'day')) {
-                  $scope.model = newVal;
-                  if (oldVal) {
-                    $scope.options.start = moment(newVal);
-                  }
-                  return _prepare();
-                }
-              });
-          }
-          $scope.$watch('before', function (newVal, oldVal) {
-            if (newVal) {
-              if (!moment.isMoment(newVal)) {
-                newVal = moment(newVal);
-              }
-              if (!newVal.isSame(oldVal, 'day')) {
-                return _prepare();
-              }
-            }
-          });
-          return $scope.$watch('after', function (newVal, oldVal) {
-            if (newVal) {
-              if (!moment.isMoment(newVal)) {
-                newVal = moment(newVal);
-              }
-              if (!newVal.isSame(oldVal, 'day')) {
-                return _prepare();
-              }
-            }
-          });
+          // switch ($scope.options.mode) {
+          //   case "multiple":
+          //     $scope.$watchCollection('model', function (/*newVals, oldVals*/) {
+          //       return _prepare();
+          //     });
+          //     break;
+          //   case "simple":
+          //     $scope.$watch('model', function (newVal, oldVal) {
+          //       if (!moment.isMoment(newVal)) {
+          //         newVal = moment(newVal);
+          //       }
+          //       if (!oldVal || oldVal && !newVal.isSame(oldVal, 'day')) {
+          //         $scope.model = newVal;
+          //         if (oldVal) {
+          //           $scope.options.start = moment(newVal);
+          //         }
+          //         return _prepare();
+          //       }
+          //     });
+          // }
+          // $scope.$watch('before', function (newVal, oldVal) {
+          //   if (newVal) {
+          //     if (!moment.isMoment(newVal)) {
+          //       newVal = moment(newVal);
+          //     }
+          //     if (!newVal.isSame(oldVal, 'day')) {
+          //       return _prepare();
+          //     }
+          //   }
+          // });
+          // return $scope.$watch('after', function (newVal, oldVal) {
+          //   if (newVal) {
+          //     if (!moment.isMoment(newVal)) {
+          //       newVal = moment(newVal);
+          //     }
+          //     if (!newVal.isSame(oldVal, 'day')) {
+          //       return _prepare();
+          //     }
+          //   }
+          // });
         }
       };
     }
